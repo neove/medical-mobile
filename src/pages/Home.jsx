@@ -4,9 +4,6 @@ function Home() {
   return (
     <div className="min-h-screen p-4 flex items-center justify-center bg-gradient-to-br from-gray-50 to-blue-50">
       <div className="max-w-2xl mx-auto w-full h-[100vh] overflow-y-auto">
-        <h1 className="text-4xl font-bold text-gray-800 mb-4 text-center">
-          医疗移动端
-        </h1>
         <p className="text-gray-600 text-center mb-8">请选择报告风格</p>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
