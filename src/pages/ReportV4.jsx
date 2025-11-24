@@ -11,13 +11,15 @@ const reportData = {
     year: 2024,
     keyword: "守护者", // 年度关键词
     stats: {
-        patientsSeen: 1850,
-        surgeryHours: 1200,
+        patientsSeen: "2,856",
+        surgeryHours: "2,460",
         criticalCases: 98,
         newProcedures: 5,
-        consultations: 320,
-        teamTrainingHours: 150,
-        successRate: 99.1,
+        consultations: 156,
+        nightShifts: 42,
+        words: "168",
+        families: "3,200",
+        successRate: 99.8,
     },
     timeline: [
         { date: "2024.02.14", event: "除夕夜坚守岗位，完成一台急诊手术" },
@@ -229,37 +231,6 @@ const StatsPage = ({ data, isActive }) => {
         }
     }, [isActive]);
 
-
-    const option = {
-        series: [
-            {
-                type: 'gauge',
-                startAngle: 90,
-                endAngle: -270,
-                pointer: { show: false },
-                progress: {
-                    show: true,
-                    overlap: false,
-                    roundCap: true,
-                    clip: false,
-                    itemStyle: { borderWidth: 1, borderColor: '#464646' }
-                },
-                axisLine: { lineStyle: { width: 40 } },
-                splitLine: { show: false, distance: 0, length: 10 },
-                axisTick: { show: false },
-                axisLabel: { show: false, distance: 50 },
-                data: [
-                    { value: 100, name: '手术成功率', title: { offsetCenter: ['0%', '-20%'] }, detail: { valueAnimation: true, offsetCenter: ['0%', '20%'] } }
-                ],
-                title: { fontSize: 14, color: '#fff' },
-                detail: { 
-                    width: 50, height: 14, fontSize: 30, color: '#fff', formatter: '{value}%',
-                    valueAnimation: true
-                }
-            }
-        ]
-    };
-    
     // 简化版圆环配置
     const simplePieOption = {
         color: ['#3b82f6', '#8b5cf6', '#f43f5e', '#fbbf24'],
@@ -274,10 +245,10 @@ const StatsPage = ({ data, isActive }) => {
                 emphasis: { label: { show: true, fontSize: 20, fontWeight: 'bold', color: '#fff' } },
                 labelLine: { show: false },
                 data: [
-                    { value: data.stats.patientsSeen, name: '接诊' },
-                    { value: data.stats.surgeryHours, name: '手术时长' },
-                    { value: data.stats.criticalCases, name: '急救' },
-                    { value: data.stats.consultations, name: '会诊' }
+                    { value: 1850, name: '接诊' },
+                    { value: 2460, name: '手术' },
+                    { value: 98, name: '急救' },
+                    { value: 156, name: '会诊' }
                 ]
             }
         ]
@@ -320,8 +291,8 @@ const StatsPage = ({ data, isActive }) => {
                             </GlassCard>
                             <GlassCard className="flex flex-col items-center justify-center !p-4">
                                 <BriefcaseMedical className="w-6 h-6 text-green-300 mb-2" />
-                                <span className="text-2xl font-bold text-white">{data.stats.newProcedures}</span>
-                                <span className="text-xs text-white/60">新技术</span>
+                                <span className="text-2xl font-bold text-white">{data.stats.nightShifts}</span>
+                                <span className="text-xs text-white/60">夜班值守</span>
                             </GlassCard>
                         </div>
 
@@ -332,7 +303,7 @@ const StatsPage = ({ data, isActive }) => {
                                 opts={{ renderer: 'svg' }} 
                             />
                             <div className="absolute text-center pointer-events-none">
-                                <div className="text-3xl font-bold text-white">99.1%</div>
+                                <div className="text-3xl font-bold text-white">99.8%</div>
                                 <div className="text-xs text-white/60">成功率</div>
                             </div>
                         </GlassCard>
@@ -449,8 +420,8 @@ const AchievementPage = ({ data, isActive }) => {
     );
 };
 
-// P7: 展望
-const VisionPage = ({ data, isActive }) => {
+// P7: 展望 -> P7: 寄语
+const MessagePage = ({ data, isActive }) => {
     return (
         <div className="relative h-full w-full overflow-hidden flex flex-col items-center justify-center">
             <div 
@@ -460,26 +431,40 @@ const VisionPage = ({ data, isActive }) => {
                     transform: isActive ? 'scale(1.1)' : 'scale(1.0)' 
                 }}
             />
-            <div className="absolute inset-0 bg-indigo-900/50" />
+            <div className="absolute inset-0 bg-indigo-900/50 backdrop-blur-[1px]" />
 
             <div className="relative z-10 px-8 w-full text-center">
                 {isActive && (
                     <>
                         <FadeInText delay={200} className="mb-12">
-                            <h2 className="text-5xl font-bold text-white mb-4">2025</h2>
+                            <h2 className="text-5xl font-bold text-white mb-4 font-serif">2025</h2>
                             <div className="h-1 w-20 bg-white/50 mx-auto rounded-full" />
                         </FadeInText>
 
-                        <GlassCard className="mb-12 transform rotate-1">
-                             <p className="text-xl text-white leading-relaxed font-light text-left">
-                                {data.nextYearGoal}
-                            </p>
-                        </GlassCard>
+                        <div className="space-y-8 text-white/90 font-light text-lg leading-relaxed">
+                            <FadeInText delay={400}>
+                                <p>
+                                    用 <span className="text-2xl font-bold text-white mx-1">{data.stats.surgeryHours}</span> 小时的坚守
+                                </p>
+                                <p className="mt-2">
+                                    守护 <span className="text-2xl font-bold text-white mx-1">{data.stats.families}</span> 个生命的安康
+                                </p>
+                            </FadeInText>
 
-                        <FadeInText delay={800}>
-                             <button className="px-8 py-3 bg-white text-indigo-900 rounded-full font-bold shadow-lg hover:scale-105 transition-transform">
-                                加油，{data.name}！
-                             </button>
+                            <FadeInText delay={600}>
+                                <p>
+                                    书写 <span className="text-2xl font-bold text-white mx-1">{data.stats.words}</span> 万字病历
+                                </p>
+                                <p className="mt-2">
+                                    铭刻 <span className="text-2xl font-bold text-white mx-1">{data.stats.families}</span> 个家庭的记忆
+                                </p>
+                            </FadeInText>
+                        </div>
+
+                        <FadeInText delay={1000} className="mt-12">
+                             <div className="inline-block px-8 py-3 bg-white/10 backdrop-blur-md border border-white/30 rounded-full">
+                                <span className="text-white font-bold tracking-widest">医路漫漫，感恩有您！</span>
+                             </div>
                         </FadeInText>
                     </>
                 )}
@@ -651,7 +636,7 @@ const App = () => {
         { id: 3, component: StatsPage, data: reportData },
         { id: 4, component: CommentsPage, data: reportData },
         { id: 5, component: AchievementPage, data: reportData },
-        { id: 6, component: VisionPage, data: reportData },
+        { id: 6, component: MessagePage, data: reportData },
         { id: 7, component: SharePage, data: reportData },
     ];
 

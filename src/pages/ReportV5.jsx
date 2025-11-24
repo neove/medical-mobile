@@ -14,21 +14,25 @@ const reportData = {
     keyword: "坚守",
     summary: "在生与死的边界线上，你用冷静与专业，守住了生命的防线。2024，是平凡也不凡的一年。",
     stats: {
-        patients: 1850,
-        surgeries: 320,
-        hours: 2400,
-        rating: 99.8
+        patients: "2,856",
+        surgeries: "328",
+        hours: "2,460",
+        nightShifts: "42",
+        consultations: "156",
+        words: "168",
+        families: "3,200",
+        rating: "4.99"
     },
     monthlyData: [
-        { month: 'Jan', value: 45 }, { month: 'Feb', value: 52 }, { month: 'Mar', value: 48 },
+        { month: 'Jan', value: 45 }, { month: 'Feb', value: 52 }, { month: 'Mar', value: 58 },
         { month: 'Apr', value: 61 }, { month: 'May', value: 55 }, { month: 'Jun', value: 67 },
         { month: 'Jul', value: 72 }, { month: 'Aug', value: 65 }, { month: 'Sep', value: 58 },
-        { month: 'Oct', value: 63 }, { month: 'Nov', value: 59 }, { month: 'Dec', value: 48 }
+        { month: 'Oct', value: 63 }, { month: 'Nov', value: 75 }, { month: 'Dec', value: 68 }
     ],
     highlights: [
-        { title: "学术突破", desc: "发表 SCI 论文 2 篇" },
-        { title: "技术革新", desc: "引入微创瓣膜置换术" },
-        { title: "团队建设", desc: "带领小组获优秀团队奖" }
+        { title: "学术突破", desc: "发表 SCI 论文 3 篇" },
+        { title: "技术革新", desc: "独立主刀 TAVI 56 例" },
+        { title: "团队建设", desc: "年度绩效 Top 5%" }
     ],
     testimonials: [
         { text: "谢谢您给了我第二次生命，您是我的恩人。", author: "李阿姨 · 术后3个月" },
@@ -140,10 +144,10 @@ const StatsPage = ({ isActive }) => {
             {/* 大数字网格 */}
             <div className="grid grid-cols-2 gap-[1px] bg-stone-300 border border-stone-300 mb-8">
                 {[
-                    { label: "接诊患者", val: reportData.stats.patients, unit: "人" },
+                    { label: "接诊患者", val: reportData.stats.patients, unit: "人次" },
                     { label: "手术台次", val: reportData.stats.surgeries, unit: "台" },
-                    { label: "工作时长", val: reportData.stats.hours, unit: "h" },
-                    { label: "患者好评", val: reportData.stats.rating, unit: "%" }
+                    { label: "夜班值守", val: reportData.stats.nightShifts, unit: "次" },
+                    { label: "院内会诊", val: reportData.stats.consultations, unit: "例" }
                 ].map((item, idx) => (
                     <div key={idx} className={`bg-[#f4f1ea] p-6 flex flex-col justify-between aspect-square transition-all duration-700 delay-${idx * 100 + 300} ${isActive ? 'opacity-100 scale-100' : 'opacity-0 scale-95'}`}>
                         <span className="text-stone-400 text-xs">{item.label}</span>
@@ -284,7 +288,41 @@ const FocusPage = ({ isActive }) => (
     </div>
 );
 
-// 5. 分享：极简卡片
+// 7. 寄语：致敬医者
+const MessagePage = ({ isActive }) => (
+    <div className="h-full w-full bg-[#f4f1ea] relative overflow-hidden flex flex-col justify-center p-10 text-center">
+        <div className={`transition-all duration-1000 ${isActive ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+            <Quote className="w-10 h-10 text-stone-400 mx-auto mb-8" />
+            
+            <div className="font-serif text-xl text-stone-800 leading-loose space-y-6">
+                <p>
+                    2025，您用 <span className="font-bold text-3xl mx-1 border-b-2 border-stone-300">{reportData.stats.hours}</span> 小时的坚守，
+                </p>
+                <p>
+                    守护了 <span className="font-bold text-3xl mx-1 border-b-2 border-stone-300">{reportData.stats.families}</span> 个生命的安康。
+                </p>
+                <p>
+                    您写下的 <span className="font-bold text-3xl mx-1 border-b-2 border-stone-300">{reportData.stats.words}</span> 万字病历，
+                </p>
+                <p>
+                    是 <span className="font-bold text-3xl mx-1 border-b-2 border-stone-300">{reportData.stats.families}</span> 个家庭不能忘却的记忆。
+                </p>
+            </div>
+
+            <div className={`mt-12 transition-all duration-1000 delay-500 ${isActive ? 'opacity-100 scale-100' : 'opacity-0 scale-95'}`}>
+                <div className="inline-block border-y border-stone-400 py-3 px-8">
+                    <span className="text-stone-600 font-serif tracking-[0.2em] uppercase text-sm">Thank you for everything</span>
+                    <div className="text-2xl font-bold text-stone-900 mt-1">医路漫漫，感恩有您</div>
+                </div>
+            </div>
+        </div>
+        
+        {/* Background Texture */}
+        <div className="absolute inset-0 opacity-[0.05] pointer-events-none bg-[url('https://www.transparenttextures.com/patterns/cream-paper.png')]" />
+    </div>
+);
+
+// 8. 分享：极简卡片
 const SharePage = ({ isActive }) => {
     const [showModal, setShowModal] = useState(false);
 
@@ -321,12 +359,23 @@ const SharePage = ({ isActive }) => {
 
                 <div className="mt-auto">
                     <p className="text-xs text-center text-stone-400 mb-4 font-serif italic">"{reportData.quote}"</p>
-                    <button 
-                        onClick={() => setShowModal(true)}
-                        className="w-full py-4 bg-stone-900 text-white text-sm font-bold uppercase tracking-widest hover:bg-stone-800 transition-colors flex items-center justify-center gap-2"
-                    >
-                        <Share2 className="w-4 h-4" /> Share
-                    </button>
+                    <div className="flex gap-3">
+                        <button 
+                            onClick={() => {
+                                navigator.clipboard.writeText(window.location.href);
+                                alert("链接已复制");
+                            }}
+                            className="flex-1 py-4 bg-stone-200 text-stone-800 text-sm font-bold uppercase tracking-widest hover:bg-stone-300 transition-colors flex items-center justify-center gap-1"
+                        >
+                            <Share2 className="w-4 h-4" /> Link
+                        </button>
+                        <button 
+                            onClick={() => setShowModal(true)}
+                            className="flex-1 py-4 bg-stone-900 text-white text-sm font-bold uppercase tracking-widest hover:bg-stone-800 transition-colors flex items-center justify-center gap-1"
+                        >
+                            <Download className="w-4 h-4" /> Poster
+                        </button>
+                    </div>
                 </div>
             </div>
 
@@ -364,7 +413,7 @@ export default function ReportV5() {
     const containerRef = useRef(null);
     const isScrolling = useRef(false);
 
-    const pages = [CoverPage, IntroPage, StatsPage, CalendarPage, MomentsPage, FocusPage, SharePage];
+    const pages = [CoverPage, IntroPage, StatsPage, CalendarPage, MomentsPage, FocusPage, MessagePage, SharePage];
 
     const handleScroll = (direction) => {
         if (isScrolling.current) return;

@@ -12,16 +12,20 @@ const reportData = {
     year: 2024,
     keyword: "破局",
     stats: {
-        patients: 1850,
-        surgeries: 320,
-        hours: 2400,
-        rating: 99.8
+        patients: "2,856",
+        surgeries: "328",
+        hours: "2,460",
+        rating: 99.8,
+        nightShifts: 42,
+        consultations: 156,
+        words: 168,
+        families: "3,200"
     },
-    monthlyData: [45, 52, 48, 61, 55, 67, 72, 65, 58, 63, 59, 48],
+    monthlyData: [45, 52, 58, 61, 55, 67, 72, 65, 58, 63, 75, 68],
     highlights: [
-        { title: "年度科研突破", desc: "SCI 论文引用率创新高" },
-        { title: "微创手术先锋", desc: "科室首例 TAVI 手术主刀" },
-        { title: "患者信赖之选", desc: "年度锦旗数量全院第一" }
+        { title: "SCI 论文 3 篇", desc: "IF 总计 12.5" },
+        { title: "TAVI 手术 56 例", desc: "独立主刀突破" },
+        { title: "锦旗 28 面", desc: "患者满意度 Top 10" }
     ],
     abilities: [
         { name: '临床技术', value: 95 },
@@ -104,10 +108,10 @@ const StatsPage = ({ isActive }) => {
 
             <div className="relative z-10 grid grid-cols-2 gap-4">
                 {[
-                    { label: "接诊患者", val: reportData.stats.patients, icon: Users, color: "from-blue-400 to-cyan-300" },
-                    { label: "手术台次", val: reportData.stats.surgeries, icon: Zap, color: "from-purple-400 to-pink-300" },
-                    { label: "工作时长", val: reportData.stats.hours, icon: Clock, color: "from-amber-400 to-orange-300" },
-                    { label: "好评率", val: reportData.stats.rating + "%", icon: Award, color: "from-emerald-400 to-green-300" }
+                    { label: "接诊患者", val: reportData.stats.patients, icon: Users, color: "from-blue-400 to-cyan-300", unit: "人次" },
+                    { label: "手术台次", val: reportData.stats.surgeries, icon: Zap, color: "from-purple-400 to-pink-300", unit: "台" },
+                    { label: "夜班值守", val: reportData.stats.nightShifts, icon: Clock, color: "from-amber-400 to-orange-300", unit: "次" },
+                    { label: "好评率", val: reportData.stats.rating + "%", icon: Award, color: "from-emerald-400 to-green-300", unit: "" }
                 ].map((item, idx) => (
                     <GlassCard 
                         key={idx} 
@@ -121,7 +125,10 @@ const StatsPage = ({ isActive }) => {
                         <div className={`w-10 h-10 rounded-xl bg-gradient-to-br ${item.color} flex items-center justify-center mb-3 shadow-lg`}>
                             <item.icon className="w-5 h-5 text-white" />
                         </div>
-                        <div className="text-2xl font-bold text-white mb-1 font-sans">{item.val}</div>
+                        <div className="flex items-baseline gap-1 mb-1">
+                            <span className="text-2xl font-bold text-white font-sans">{item.val}</span>
+                            {item.unit && <span className="text-xs text-white/60">{item.unit}</span>}
+                        </div>
                         <div className="text-xs text-blue-100/60">{item.label}</div>
                     </GlassCard>
                 ))}
@@ -333,7 +340,52 @@ const HighlightPage = ({ isActive }) => (
     </div>
 );
 
-// 7. 分享页：极简海报
+// 7. 寄语：致敬医者
+const MessagePage = ({ isActive }) => (
+    <div className="h-full w-full relative overflow-hidden flex flex-col items-center justify-center p-8 text-center">
+        <AuroraBackground />
+        
+        <div className={`relative z-10 max-w-md transition-all duration-1000 ${isActive ? 'opacity-100' : 'opacity-0'}`}>
+            <div className="mb-8 flex justify-center">
+                <div className="w-14 h-14 rounded-full bg-white/5 backdrop-blur-md border border-white/10 flex items-center justify-center shadow-[0_0_30px_rgba(34,211,238,0.2)] animate-pulse">
+                    <Heart className="w-6 h-6 text-cyan-300 fill-cyan-300/30" />
+                </div>
+            </div>
+
+            <div className="space-y-6 font-sans text-white/90 leading-relaxed">
+                <div className={`transition-all duration-1000 delay-300 ${isActive ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
+                    <p className="text-lg">2025，您用 <span className="text-2xl font-bold text-cyan-300 mx-1">{reportData.stats.hours}</span> 小时的坚守，</p>
+                    <p>守护了 <span className="text-2xl font-bold text-cyan-300 mx-1">{reportData.stats.families}</span> 个生命的安康。</p>
+                </div>
+
+                <div className={`transition-all duration-1000 delay-700 ${isActive ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
+                    <p>您写下的 <span className="text-2xl font-bold text-cyan-300 mx-1">{reportData.stats.words}</span> 万字病历，</p>
+                    <p>是 <span className="text-2xl font-bold text-cyan-300 mx-1">{reportData.stats.families}</span> 个家庭不能忘却的记忆。</p>
+                </div>
+
+                <div className={`py-6 transition-all duration-1000 delay-[1200ms] ${isActive ? 'opacity-100' : 'opacity-0'}`}>
+                    <GlassCard className="px-6 py-2 inline-block text-sm text-blue-200/80 italic">
+                        "感谢您的每一分付出"
+                    </GlassCard>
+                </div>
+
+                <div className={`space-y-2 transition-all duration-1000 delay-[1600ms] ${isActive ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
+                    <p>愿新的一年，</p>
+                    <p>您救治的每一位患者都奔向健康，</p>
+                    <p>您付出的每一刻时光都收获回响。</p>
+                </div>
+
+                <div className={`mt-8 transition-all duration-1000 delay-[2000ms] ${isActive ? 'opacity-100 scale-100' : 'opacity-0 scale-90'}`}>
+                     <div className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-200 via-white to-blue-200 tracking-wider">
+                        医路漫漫，感恩有您！
+                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+);
+
+// 8. 分享页：极简海报
 const SharePage = ({ isActive }) => {
     const [showModal, setShowModal] = useState(false);
 
@@ -404,7 +456,7 @@ const SharePage = ({ isActive }) => {
 export default function ReportV8() {
     const [currentPage, setCurrentPage] = useState(0);
     const isScrolling = useRef(false);
-    const pages = [CoverPage, StatsPage, AbilityPage, ChartPage, FeedbackPage, HighlightPage, SharePage];
+    const pages = [CoverPage, StatsPage, AbilityPage, ChartPage, FeedbackPage, HighlightPage, MessagePage, SharePage];
 
     const handleScroll = (direction) => {
         if (isScrolling.current) return;

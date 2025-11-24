@@ -7,25 +7,25 @@ function Home() {
         <p className="text-gray-600 text-center mb-8">请选择报告风格</p>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
-          {/* 风格一：星际航行 */}
+          {/* 风格一：未来医疗 */}
           <Link
             to="/report"
             className="group relative overflow-hidden rounded-2xl shadow-xl hover:shadow-2xl transition-all transform hover:scale-105"
           >
-            <div className="absolute inset-0 bg-[#050510]"></div>
-            <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-50 animate-pulse"></div>
-            <div className="absolute top-0 right-0 w-32 h-32 bg-cyan-500/20 rounded-full blur-[50px]"></div>
+            <div className="absolute inset-0 bg-[#0b1121]"></div>
+            <div className="absolute inset-0 bg-[linear-gradient(rgba(6,182,212,0.1)_1px,transparent_1px),linear-gradient(90deg,rgba(6,182,212,0.1)_1px,transparent_1px)] bg-[size:20px_20px]"></div>
+            <div className="absolute top-0 left-0 w-full h-1 bg-cyan-500/50 animate-scan"></div>
             
             <div className="relative p-8 text-white">
-              <div className="text-3xl mb-4 animate-bounce">🚀</div>
-              <h2 className="text-2xl font-bold mb-2 text-transparent bg-clip-text bg-gradient-to-r from-cyan-200 to-blue-400">
-                风格一：星际航行
+              <div className="text-3xl mb-4 animate-pulse">🩺</div>
+              <h2 className="text-2xl font-bold mb-2 text-cyan-400">
+                风格一：未来医疗
               </h2>
-              <p className="text-cyan-100/70 text-sm mb-4">
-                网易云叙事、科幻视觉、沉浸体验
+              <p className="text-slate-400 text-sm mb-4 font-mono">
+                生命监护风、心电图表、系统界面
               </p>
-              <div className="flex items-center text-sm text-cyan-400">
-                <span>立即启航</span>
+              <div className="flex items-center text-sm text-cyan-500 font-bold font-mono">
+                <span>ACCESS SYSTEM</span>
                 <svg
                   className="w-4 h-4 ml-2 transform group-hover:translate-x-1 transition-transform"
                   fill="none"

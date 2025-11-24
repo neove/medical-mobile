@@ -14,12 +14,16 @@ const reportData = {
     keyword: "破界",
     keywordDesc: "突破舒适圈，在微毫之间寻找生命的答案。",
     stats: {
-        patients: 1850,
-        surgeries: 320,
-        hours: 2400,
+        patients: "2,856",
+        surgeries: "328",
+        nightShifts: "42",
+        consultations: "156",
+        hours: "2,460",
+        words: "168",
+        families: "3,200",
         efficiency: "+15%"
     },
-    monthlyData: [45, 52, 48, 61, 55, 67, 72, 65, 58, 63, 59, 48],
+    monthlyData: [45, 52, 58, 61, 55, 67, 72, 65, 58, 63, 75, 68],
     tags: ["微创手术", "科研突破", "患者信赖", "效率提升"]
 };
 
@@ -206,7 +210,38 @@ const TagPage = ({ isActive }) => (
     </div>
 );
 
-// 5. 尾页：神秘星空
+// 5. 致敬医者：柔光叙事
+const MessagePage = ({ isActive }) => (
+    <div className="h-full w-full flex flex-col justify-center items-center p-8 relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-slate-900 via-indigo-900 to-blue-900" />
+        <div className="absolute top-[-30%] left-[-10%] w-[500px] h-[500px] bg-indigo-500/20 rounded-full blur-[150px] animate-blob" />
+        <div className="absolute bottom-[-20%] right-[-10%] w-[400px] h-[400px] bg-cyan-400/20 rounded-full blur-[120px] animate-blob animation-delay-2000" />
+        <NoiseOverlay />
+
+        <div className={`relative z-10 text-center text-white space-y-6 transition-all duration-1000 ${isActive ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+            <p className="text-sm uppercase tracking-[0.4em] text-white/60">2025 dedication</p>
+            <p className="text-2xl font-light">
+                您用 <span className="text-4xl font-bold border-b border-white/40 pb-1 px-1">{reportData.stats.hours}</span> 小时的坚守
+            </p>
+            <p className="text-2xl font-light">
+                守护了 <span className="text-4xl font-bold border-b border-white/40 pb-1 px-1">{reportData.stats.families}</span> 个生命的安康
+            </p>
+            <p className="text-lg font-light text-white/80 leading-relaxed">
+                您写下的 <span className="text-3xl font-semibold text-white">{reportData.stats.words}</span> 万字病历，是这些家庭不能忘却的记忆。
+            </p>
+            <p className="text-base text-white/70">
+                感谢您的每一分付出，愿新的一年，您救治的每一位患者都奔向健康，您付出的每一刻时光都收获回响。
+            </p>
+            <div className="pt-6">
+                <div className="inline-flex items-center gap-2 px-6 py-3 bg-white/10 border border-white/20 rounded-full backdrop-blur-md text-sm tracking-[0.3em] font-semibold">
+                    医路漫漫 · 感恩有您
+                </div>
+            </div>
+        </div>
+    </div>
+);
+
+// 6. 尾页：神秘星空
 const KeywordPage = ({ isActive }) => (
     <div className="h-full w-full bg-slate-900 flex flex-col items-center justify-center p-8 relative overflow-hidden">
         <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-20" />
@@ -243,10 +278,29 @@ const KeywordPage = ({ isActive }) => (
                 </div>
             </GlassCard>
 
-            <div className={`mt-8 flex justify-center gap-4 transition-all duration-1000 delay-500 ${isActive ? 'opacity-100' : 'opacity-0'}`}>
-                <button className="flex items-center gap-2 px-8 py-3 bg-indigo-600 hover:bg-indigo-500 text-white rounded-full font-bold shadow-lg shadow-indigo-500/30 hover:scale-105 transition-transform text-sm">
-                    <Share2 className="w-4 h-4" />
-                    分享我的年度洞察
+            <div className={`mt-8 w-full px-4 flex gap-4 transition-all duration-1000 delay-500 ${isActive ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+                <button 
+                    onClick={() => {
+                        navigator.clipboard.writeText(window.location.href);
+                        alert("链接已复制");
+                    }}
+                    className="flex-1 group relative flex items-center justify-center gap-2 px-6 py-3.5 bg-white/80 backdrop-blur-md text-slate-700 rounded-2xl font-bold shadow-sm border border-white/50 hover:bg-white transition-all active:scale-95"
+                >
+                    <div className="p-1.5 bg-slate-100 rounded-lg group-hover:bg-slate-200 transition-colors">
+                        <Share2 className="w-4 h-4 text-slate-600" />
+                    </div>
+                    <span className="text-sm">复制链接</span>
+                </button>
+                
+                <button 
+                    onClick={() => alert("海报生成功能开发中...")}
+                    className="flex-1 group relative flex items-center justify-center gap-2 px-6 py-3.5 bg-gradient-to-r from-indigo-600 to-blue-600 text-white rounded-2xl font-bold shadow-lg shadow-blue-500/30 hover:shadow-blue-500/50 transition-all active:scale-95"
+                >
+                    <div className="absolute inset-0 bg-white/20 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity" />
+                    <div className="p-1.5 bg-white/20 rounded-lg backdrop-blur-sm">
+                        <Activity className="w-4 h-4 text-white" />
+                    </div>
+                    <span className="text-sm">保存海报</span>
                 </button>
             </div>
         </div>
@@ -260,7 +314,7 @@ const KeywordPage = ({ isActive }) => (
 export default function ReportV3() {
     const [currentPage, setCurrentPage] = useState(0);
     const isScrolling = useRef(false);
-    const pages = [CoverPage, ImpactPage, TrendPage, TagPage, KeywordPage];
+    const pages = [CoverPage, ImpactPage, TrendPage, TagPage, MessagePage, KeywordPage];
 
     const handleScroll = (direction) => {
         if (isScrolling.current) return;

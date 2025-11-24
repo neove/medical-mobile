@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { Share2, ChevronDown, Quote, Activity, Layers, Zap, Wind, Star, Clock } from 'lucide-react';
+import { Share2, ChevronDown, Quote, Activity, Layers, Zap, Wind, Star, Clock, Download } from 'lucide-react';
 import ReactECharts from 'echarts-for-react';
 
 // ----------------------------------------------------------------------
@@ -12,16 +12,20 @@ const reportData = {
     year: 2024,
     keyword: "沉淀",
     stats: {
-        patients: 1850,
-        surgeries: 320,
-        hours: 2400,
+        patients: "2,856",
+        surgeries: "328",
+        hours: "2,460",
+        nightShifts: "42",
+        consultations: "156",
+        words: "168",
+        families: "3,200",
         rating: 99.8
     },
-    monthlyData: [45, 52, 48, 61, 55, 67, 72, 65, 58, 63, 59, 48],
+    monthlyData: [45, 52, 58, 61, 55, 67, 72, 65, 58, 63, 75, 68],
     highlights: [
-        { title: "科研突破", desc: "SCI 论文引用率创新高" },
-        { title: "微创先锋", desc: "科室首例 TAVI 手术主刀" },
-        { title: "患者信赖", desc: "年度锦旗数量全院第一" }
+        { title: "科研突破", desc: "SCI 论文 3 篇 (IF 12.5)" },
+        { title: "微创先锋", desc: "独立主刀 TAVI 56 例" },
+        { title: "患者信赖", desc: "锦旗 28 面，好评 Top 10" }
     ],
     abilities: [
         { name: '临床技术', max: 100, value: 95 },
@@ -87,8 +91,9 @@ const CoverPage = ({ isActive }) => (
 // 2. 数据：极简浮动
 const StatsPage = ({ isActive }) => {
     const stats = [
-        { label: "接诊患者", value: reportData.stats.patients, unit: "人" },
+        { label: "接诊患者", value: reportData.stats.patients, unit: "人次" },
         { label: "主刀手术", value: reportData.stats.surgeries, unit: "台" },
+        { label: "夜班值守", value: reportData.stats.nightShifts, unit: "次" },
         { label: "好评率", value: reportData.stats.rating, unit: "%" },
     ];
 
@@ -101,7 +106,7 @@ const StatsPage = ({ isActive }) => {
                 <p className="text-white/40 font-serif text-sm">Overview</p>
             </div>
 
-            <div className="relative z-10 flex flex-col gap-12">
+            <div className="relative z-10 flex flex-col gap-8">
                 {stats.map((item, idx) => (
                     <div 
                         key={idx}
@@ -258,7 +263,58 @@ const MomentsPage = ({ isActive }) => (
     </div>
 );
 
-// 6. 关键词：电影字幕
+// 6. 寄语：致敬医者
+const MessagePage = ({ isActive }) => (
+    <div className="h-full w-full relative overflow-hidden flex flex-col items-center justify-center p-8 text-center">
+        <FlowBackground color={['#312e81', '#4c1d95']} /> {/* Indigo to Violet */}
+        
+        <div className={`relative z-10 transition-all duration-1000 ${isActive ? 'opacity-100' : 'opacity-0'}`}>
+            <div className="mb-12">
+                <div className="w-1 h-24 bg-gradient-to-b from-transparent via-white/50 to-transparent mx-auto" />
+            </div>
+
+            <div className="font-serif font-light space-y-8 text-lg tracking-wide">
+                <div className={`transition-all duration-1000 delay-300 ${isActive ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
+                    <p className="text-white/60 text-sm mb-2">2025</p>
+                    <p className="text-white">
+                        以 <span className="text-2xl font-normal text-white border-b border-white/20 pb-1 mx-1">{reportData.stats.hours}</span> 时之微光
+                    </p>
+                    <p className="text-white mt-2">
+                        照亮 <span className="text-2xl font-normal text-white border-b border-white/20 pb-1 mx-1">{reportData.stats.families}</span> 个生命角落
+                    </p>
+                </div>
+
+                <div className={`transition-all duration-1000 delay-700 ${isActive ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
+                    <p className="text-white">
+                        书写 <span className="text-2xl font-normal text-white border-b border-white/20 pb-1 mx-1">{reportData.stats.words}</span> 万字医案
+                    </p>
+                    <p className="text-white mt-2">
+                        铭刻 <span className="text-2xl font-normal text-white border-b border-white/20 pb-1 mx-1">{reportData.stats.families}</span> 户人间冷暖
+                    </p>
+                </div>
+
+                <div className={`py-8 transition-all duration-1000 delay-[1200ms] ${isActive ? 'opacity-100 scale-100' : 'opacity-0 scale-95'}`}>
+                    <div className="inline-block px-6 py-2 border border-white/10 rounded-full bg-white/5 backdrop-blur-sm">
+                         <p className="text-xs text-white/60 uppercase tracking-[0.2em]">"Thank you"</p>
+                    </div>
+                </div>
+
+                <div className={`transition-all duration-1000 delay-[1600ms] ${isActive ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
+                    <p className="text-white/80 text-base">愿 悬壶济世 岁岁安康</p>
+                    <p className="text-white/80 text-base mt-2">不负韶华 必有回响</p>
+                </div>
+            </div>
+            
+            <div className={`mt-12 transition-all duration-1000 delay-[2000ms] ${isActive ? 'opacity-100 blur-0' : 'opacity-0 blur-md'}`}>
+                <div className="text-xl font-serif text-white tracking-[0.5em] opacity-80">
+                    感恩有您
+                </div>
+            </div>
+        </div>
+    </div>
+);
+
+// 7. 关键词：电影字幕
 const KeywordPage = ({ isActive }) => (
     <div className="h-full w-full relative overflow-hidden flex flex-col items-center justify-center p-8 text-center">
         <FlowBackground color={['#2563eb', '#4f46e5']} /> {/* Blue to Indigo */}
@@ -327,9 +383,25 @@ const SharePage = ({ isActive }) => (
                     </div>
                 </div>
 
-                <div className="flex items-center justify-center gap-2 text-xs text-gray-400 font-serif">
-                    <Share2 className="w-3 h-3" />
-                    <span>Share Report</span>
+                <div className="flex items-center justify-center gap-3 text-xs text-gray-400 font-serif mt-4">
+                    <button 
+                        onClick={() => {
+                            navigator.clipboard.writeText(window.location.href);
+                            alert("链接已复制");
+                        }}
+                        className="flex items-center gap-1 hover:text-white transition-colors"
+                    >
+                        <Share2 className="w-3 h-3" />
+                        <span>Copy Link</span>
+                    </button>
+                    <span>|</span>
+                    <button 
+                        onClick={() => alert("海报生成功能开发中...")}
+                        className="flex items-center gap-1 hover:text-white transition-colors"
+                    >
+                        <Download className="w-3 h-3" />
+                        <span>Save Card</span>
+                    </button>
                 </div>
             </div>
         </div>
@@ -343,7 +415,7 @@ const SharePage = ({ isActive }) => (
 export default function ReportV6() {
     const [currentPage, setCurrentPage] = useState(0);
     const isScrolling = useRef(false);
-    const pages = [CoverPage, StatsPage, AbilityPage, ChartPage, MomentsPage, KeywordPage, SharePage];
+    const pages = [CoverPage, StatsPage, AbilityPage, ChartPage, MomentsPage, MessagePage, KeywordPage, SharePage];
 
     const handleScroll = (direction) => {
         if (isScrolling.current) return;

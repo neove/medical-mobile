@@ -13,21 +13,23 @@ const reportData = {
     keyword: "仁心",
     summary: "医者仁心，悬壶济世。于方寸手术台间，修补生命之缺憾；在日夜轮转里，守护心跳之律动。",
     stats: {
-        patients: 1850,
-        surgeries: 320,
-        hours: 2400,
-        rating: 99.8
+        patients: "二八五六", // 2856
+        surgeries: "三百廿八", // 328
+        hours: "二四六零", // 2460
+        nightShifts: "四十二", // 42
+        consultations: "一百五十六", // 156
+        rating: "上上" // 99.8
     },
     monthlyData: [
-        { month: '一月', value: 45 }, { month: '二月', value: 52 }, { month: '三月', value: 48 },
+        { month: '一月', value: 45 }, { month: '二月', value: 52 }, { month: '三月', value: 58 },
         { month: '四月', value: 61 }, { month: '五月', value: 55 }, { month: '六月', value: 67 },
         { month: '七月', value: 72 }, { month: '八月', value: 65 }, { month: '九月', value: 58 },
-        { month: '十月', value: 63 }, { month: '十一月', value: 59 }, { month: '十二月', value: 48 }
+        { month: '十月', value: 63 }, { month: '十一月', value: 75 }, { month: '十二月', value: 68 }
     ],
     achievements: [
-        { title: "妙手回春", desc: "主刀完成高难度手术五例" },
-        { title: "杏林春暖", desc: "获患者锦旗十余面" },
-        { title: "著书立说", desc: "发表学术论文两篇" }
+        { title: "著书立说", desc: "发表 SCI 论文三篇" },
+        { title: "妙手回春", desc: "主刀 TAVI 手术五十六例" },
+        { title: "杏林春暖", desc: "获患者锦旗二十八面" }
     ],
     comments: [
         { text: "医术精湛，如春风化雨。", author: "李氏" },
@@ -175,14 +177,14 @@ const StatsPage = ({ isActive }) => {
             {/* 数据概览 */}
             <div className="grid grid-cols-2 gap-6 mb-8">
                 {[
-                    { label: "接诊", val: reportData.stats.patients },
-                    { label: "手术", val: reportData.stats.surgeries },
-                    { label: "时长", val: reportData.stats.hours },
-                    { label: "好评", val: reportData.stats.rating }
+                    { label: "接诊(人次)", val: reportData.stats.patients },
+                    { label: "手术(台)", val: reportData.stats.surgeries },
+                    { label: "时长(时)", val: reportData.stats.hours },
+                    { label: "夜班(次)", val: reportData.stats.nightShifts }
                 ].map((item, idx) => (
                     <div key={idx} className={`border-l border-stone-300 pl-4 transition-all duration-700 delay-${idx * 100 + 300} ${isActive ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'}`}>
                         <div className="text-xs text-stone-400 font-serif mb-1">{item.label}</div>
-                        <div className="text-2xl font-serif font-bold text-stone-800">{item.val}</div>
+                        <div className="text-xl font-serif font-bold text-stone-800">{item.val}</div>
                     </div>
                 ))}
             </div>
@@ -277,7 +279,61 @@ const CommentPage = ({ isActive }) => (
     </div>
 );
 
-// 6. 研习：文房卷轴
+// 6. 寄语：致敬医者
+const MessagePage = ({ isActive }) => (
+    <div className="h-full w-full relative overflow-hidden bg-[#fcfaf2] flex flex-col items-center justify-center p-8">
+        {/* 背景 - 竹叶剪影 */}
+        <div className="absolute top-0 left-0 opacity-10 pointer-events-none">
+             <img src="https://images.unsplash.com/photo-1520509414578-d94865923ad0?w=800&q=80" className="w-[300px] grayscale contrast-150 mix-blend-multiply" />
+        </div>
+
+        <div className={`relative z-10 w-full max-w-md transition-all duration-[1500ms] ${isActive ? 'opacity-100' : 'opacity-0'}`}>
+            <div className="flex justify-center mb-12">
+                <div className="w-[2px] h-16 bg-red-800/50" />
+            </div>
+
+            <div className="space-y-8 text-center font-serif leading-loose">
+                <div className={`transition-all duration-1000 delay-300 ${isActive ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
+                    <p className="text-stone-500 text-sm mb-2">乙巳年 · 愿</p>
+                    <div className="text-xl text-stone-800">
+                        用 <span className="text-2xl font-bold text-red-900 mx-1 border-b border-stone-300">{reportData.stats.hours}</span> 时之坚守
+                    </div>
+                    <div className="text-xl text-stone-800 mt-2">
+                        护 <span className="text-2xl font-bold text-red-900 mx-1 border-b border-stone-300">三千二百</span> 家之安康
+                    </div>
+                </div>
+
+                <div className={`transition-all duration-1000 delay-700 ${isActive ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
+                    <div className="text-xl text-stone-800">
+                        书 <span className="text-2xl font-bold text-red-900 mx-1 border-b border-stone-300">百六十八万</span> 字之医案
+                    </div>
+                    <div className="text-xl text-stone-800 mt-2">
+                        铭 <span className="text-2xl font-bold text-red-900 mx-1 border-b border-stone-300">三千二百</span> 户之深情
+                    </div>
+                </div>
+
+                <div className={`py-6 transition-all duration-1000 delay-[1200ms] ${isActive ? 'opacity-100 scale-100' : 'opacity-0 scale-95'}`}>
+                    <div className="w-16 h-16 border-2 border-red-800 rounded-full mx-auto p-1 flex items-center justify-center rotate-3 opacity-80">
+                         <div className="w-full h-full border border-red-800 rounded-full flex items-center justify-center bg-red-50 text-red-900 font-bold text-xs writing-vertical-rl">
+                            感恩有您
+                         </div>
+                    </div>
+                </div>
+
+                <div className={`transition-all duration-1000 delay-[1600ms] ${isActive ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
+                    <p className="text-stone-600">愿君 悬壶济世 岁岁安康</p>
+                    <p className="text-stone-600 mt-2">不负韶华 必有回响</p>
+                </div>
+            </div>
+
+            <div className="absolute bottom-0 right-0 opacity-20 pointer-events-none translate-y-1/2 translate-x-1/4">
+                <Seal text="医者" className="w-40 h-40" />
+            </div>
+        </div>
+    </div>
+);
+
+// 7. 研习：文房卷轴
 const StudyPage = ({ isActive }) => (
     <div className="h-full w-full relative overflow-hidden bg-[#fcfaf2] flex flex-col items-center justify-center p-8">
         {/* 背景 - 书房一角 */}
@@ -390,7 +446,7 @@ const SharePage = ({ isActive }) => {
 export default function ReportV7() {
     const [currentPage, setCurrentPage] = useState(0);
     const isScrolling = useRef(false);
-    const pages = [CoverPage, IntroPage, StatsPage, AchievementPage, CommentPage, StudyPage, SharePage];
+    const pages = [CoverPage, IntroPage, StatsPage, AchievementPage, CommentPage, StudyPage, MessagePage, SharePage];
 
     const handleScroll = (direction) => {
         if (isScrolling.current) return;

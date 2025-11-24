@@ -11,6 +11,13 @@ const reportData = {
     year: 2024,
     keyword: "光之愈梦者",
     keywordDesc: "你的温柔是手术刀无法切断的坚韧",
+    stats: {
+        patients: "2,856",
+        surgeries: "328",
+        hours: "2,460",
+        words: "168",
+        families: "3,200"
+    },
     story: {
         intro: {
             t1: "时光的指针拨回到 2024 年初",
@@ -18,7 +25,7 @@ const reportData = {
             t3: "留下了无数匆忙的脚印"
         },
         patients: {
-            count: 1850,
+            count: "2,856",
             t1: "这一年，你与",
             t2: "个生命产生了交集",
             t3: "每一次听诊器的触碰",
@@ -30,16 +37,24 @@ const reportData = {
             t1: "还记得",
             t2: "的那个凌晨吗？",
             t3: "城市已经睡去，星光也很微弱",
-            t4: "而你，还在无影灯下守护心跳"
+            t4: "而你，还在无影灯下抢救急性A型主动脉夹层"
         },
         surgery: {
-            count: 320,
-            hours: 2400,
+            count: "328",
+            hours: "2,460",
             t1: "这一年，你完成了",
             t2: "台高难度手术",
             t3: "在生死时速的博弈中",
-            t4: "你用 2400 小时的专注",
+            t4: "你用 2,460 小时的专注",
             t5: "赢回了无数家庭的春天"
+        },
+        overtime: {
+            count: 42,
+            t1: "还有",
+            t2: "个夜晚",
+            t3: "你是在医院度过的",
+            t4: "值班室的灯光",
+            t5: "是你最忠实的伙伴"
         },
         special: {
             date: "9月20日",
@@ -197,7 +212,35 @@ const SurgeryPage = ({ isActive }) => (
     </div>
 );
 
-// 5. 特别：感动瞬间
+// 5. 加班：夜的守候
+const OvertimePage = ({ isActive }) => (
+    <div className="h-full w-full flex flex-col justify-center p-8 relative overflow-hidden">
+        <div className="absolute inset-0 bg-[#2b2d42]" />
+        <div className="absolute inset-0 opacity-30 bg-[url('https://images.unsplash.com/photo-1519681393784-d120267933ba?w=800&q=80')] bg-cover bg-center mix-blend-overlay" />
+
+        <div className="relative z-10 text-white text-center font-serif">
+             <p className={`text-xl mb-4 transition-all duration-1000 delay-300 ${isActive ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
+                {reportData.story.overtime.t1}
+            </p>
+            <h2 className={`text-7xl font-bold mb-4 text-indigo-300 transition-all duration-1000 delay-500 ${isActive ? 'opacity-100 scale-100' : 'opacity-0 scale-90'}`}>
+                {reportData.story.overtime.count} <span className="text-2xl font-normal text-white">个</span>
+            </h2>
+             <p className={`text-xl mb-8 transition-all duration-1000 delay-700 ${isActive ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
+                {reportData.story.overtime.t2}
+            </p>
+            
+            <div className="w-16 h-px bg-white/20 mx-auto mb-8" />
+
+            <div className={`text-lg text-gray-300 space-y-2 transition-all duration-1000 delay-[1200ms] ${isActive ? 'opacity-100' : 'opacity-0'}`}>
+                 <p>{reportData.story.overtime.t3}</p>
+                 <p>{reportData.story.overtime.t4}</p>
+                 <p>{reportData.story.overtime.t5}</p>
+            </div>
+        </div>
+    </div>
+);
+
+// 6. 特别：感动瞬间
 const SpecialPage = ({ isActive }) => (
     <div className="h-full w-full flex flex-col justify-center p-8 relative overflow-hidden">
         <div className="absolute inset-0 bg-[#d4a373]" />
@@ -229,7 +272,46 @@ const SpecialPage = ({ isActive }) => (
     </div>
 );
 
-// 6. 关键词：年度形象
+// 7. 寄语：致敬医者
+const MessagePage = ({ isActive }) => (
+    <div className="h-full w-full flex flex-col justify-center p-8 relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-b from-purple-900 to-slate-900" />
+        <div className="absolute inset-0 opacity-20 animate-pulse">
+             <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-purple-500 rounded-full mix-blend-screen filter blur-[100px]" />
+             <div className="absolute bottom-1/4 right-1/4 w-64 h-64 bg-blue-500 rounded-full mix-blend-screen filter blur-[100px]" />
+        </div>
+
+        <div className="relative z-10 text-white/90 text-center font-serif space-y-8">
+            <div className={`transition-all duration-1000 delay-300 ${isActive ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
+                <p className="text-xl mb-2">2025，您用 <span className="text-2xl font-bold text-purple-300 border-b border-white/20">{reportData.stats.hours}</span> 小时的坚守</p>
+                <p>守护了 <span className="text-2xl font-bold text-purple-300 border-b border-white/20">{reportData.stats.families}</span> 个生命的安康</p>
+            </div>
+
+            <div className={`transition-all duration-1000 delay-700 ${isActive ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
+                <p className="text-xl mb-2">您写下的 <span className="text-2xl font-bold text-purple-300 border-b border-white/20">{reportData.stats.words}</span> 万字病历</p>
+                <p>是 <span className="text-2xl font-bold text-purple-300 border-b border-white/20">{reportData.stats.families}</span> 个家庭不能忘却的记忆</p>
+            </div>
+
+            <div className={`py-8 transition-all duration-1000 delay-[1200ms] ${isActive ? 'opacity-100 scale-100' : 'opacity-0 scale-95'}`}>
+                <div className="inline-block p-4 border border-white/10 bg-white/5 backdrop-blur-sm rounded-lg rotate-1">
+                    <p className="text-sm text-gray-300 italic">"感谢您的每一分付出"</p>
+                </div>
+            </div>
+
+            <div className={`space-y-3 text-lg transition-all duration-1000 delay-[1600ms] ${isActive ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
+                <p>愿新的一年</p>
+                <p>您救治的每一位患者都奔向健康</p>
+                <p>您付出的每一刻时光都收获回响</p>
+            </div>
+
+            <div className={`mt-8 transition-all duration-1000 delay-[2000ms] ${isActive ? 'opacity-100' : 'opacity-0'}`}>
+                 <p className="text-2xl font-bold text-purple-200 tracking-widest">医路漫漫，感恩有您！</p>
+            </div>
+        </div>
+    </div>
+);
+
+// 8. 关键词：年度形象
 const KeywordPage = ({ isActive }) => (
     <div className="h-full w-full flex flex-col items-center justify-center p-8 relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-indigo-300 to-purple-400" />
@@ -273,7 +355,7 @@ const KeywordPage = ({ isActive }) => (
 export default function ReportV9() {
     const [currentPage, setCurrentPage] = useState(0);
     const isScrolling = useRef(false);
-    const pages = [CoverPage, MeetPage, NightPage, SurgeryPage, SpecialPage, KeywordPage];
+    const pages = [CoverPage, MeetPage, NightPage, SurgeryPage, OvertimePage, SpecialPage, MessagePage, KeywordPage];
 
     // 自动播放逻辑 (模拟网易云自动翻页，但这里保留手动控制体验更好)
     // 如果需要自动播放，可以在 useEffect 中设置定时器

@@ -15,12 +15,16 @@ const reportData = {
     keyword: "臻·心",
     keywordDesc: "以至臻之术，护方寸之心",
     stats: {
-        patients: 1850,
-        surgeries: 320,
-        hours: 2400,
+        patients: "2,856",
+        surgeries: "328",
+        hours: "2,460",
+        consultations: "156",
+        nightShifts: "42",
+        words: "168",
+        families: "3,200",
         rating: "4.99"
     },
-    monthlyData: [45, 52, 48, 61, 55, 67, 72, 65, 58, 63, 59, 48],
+    monthlyData: [45, 52, 58, 61, 55, 67, 72, 65, 58, 63, 75, 68],
     abilities: [
         { name: '临床决策', max: 100, value: 96 },
         { name: '手术技能', max: 100, value: 92 },
@@ -36,9 +40,9 @@ const reportData = {
         { value: 20, name: '高难度攻坚' }
     ],
     achievements: [
-        { title: "SCI 核心期刊发表", sub: "Impact Factor 5.2" },
-        { title: "年度 TAVI 手术", sub: "独立主刀突破 50 台" },
-        { title: "零医疗纠纷", sub: "患者满意度全院 Top 10" }
+        { title: "SCI 论文发表 3 篇", sub: "IF 总计 12.5" },
+        { title: "独立主刀 TAVI 手术 56 例", sub: "年度核心技术突破" },
+        { title: "年度绩效 Top 5%", sub: "全院排名前列" }
     ]
 };
 
@@ -85,28 +89,29 @@ const StatsPage = ({ isActive }) => (
             <div className="h-1 w-12 bg-gradient-to-r from-amber-500 to-transparent" />
         </div>
 
-        <div className="grid grid-cols-1 gap-6 relative z-10">
+        <div className="grid grid-cols-2 gap-4 relative z-10">
             {[
-                { label: "年度接诊量", val: reportData.stats.patients, unit: "人次", icon: User },
+                { label: "年度接诊", val: reportData.stats.patients, unit: "人次", icon: User },
                 { label: "主刀手术", val: reportData.stats.surgeries, unit: "台", icon: Activity },
-                { label: "专注时长", val: reportData.stats.hours, unit: "小时", icon: Clock },
+                { label: "夜班值守", val: reportData.stats.nightShifts, unit: "次", icon: Clock },
+                { label: "院内会诊", val: reportData.stats.consultations, unit: "例", icon: BarChart2 },
             ].map((item, idx) => (
                 <div 
                     key={idx}
-                    className={`relative bg-white/5 border border-white/5 p-6 transition-all duration-700 hover:bg-white/10 group`}
+                    className={`relative bg-white/5 border border-white/5 p-4 transition-all duration-700 hover:bg-white/10 group min-h-[120px] flex flex-col justify-between`}
                     style={{ 
-                        transitionDelay: `${idx * 200 + 300}ms`,
+                        transitionDelay: `${idx * 100 + 300}ms`,
                         transform: isActive ? 'translateY(0)' : 'translateY(30px)',
                         opacity: isActive ? 1 : 0
                     }}
                 >
                     <div className="flex justify-between items-start mb-2">
-                        <span className="text-slate-400 text-sm">{item.label}</span>
-                        <item.icon className="w-5 h-5 text-amber-500/50 group-hover:text-amber-500 transition-colors" />
+                        <span className="text-slate-400 text-xs">{item.label}</span>
+                        <item.icon className="w-4 h-4 text-amber-500/50 group-hover:text-amber-500 transition-colors" />
                     </div>
-                    <div className="flex items-baseline gap-2">
-                        <span className="text-4xl font-bold text-white font-sans tracking-tight">{item.val}</span>
-                        <span className="text-xs text-slate-500">{item.unit}</span>
+                    <div className="flex items-baseline gap-1">
+                        <span className="text-2xl font-bold text-white font-sans tracking-tight">{item.val}</span>
+                        <span className="text-[10px] text-slate-500">{item.unit}</span>
                     </div>
                     {/* 底部金线 */}
                     <div className="absolute bottom-0 left-0 w-0 h-[2px] bg-amber-500 transition-all duration-700 group-hover:w-full" />
@@ -346,7 +351,63 @@ const AwardPage = ({ isActive }) => (
     </div>
 );
 
-// 7. 关键词：身份象征
+// 7. 寄语：致敬医者
+const MessagePage = ({ isActive }) => (
+    <div className="h-full w-full bg-[#0b1121] flex flex-col items-center justify-center p-8 relative text-center">
+        {/* 背景光效 */}
+        <div className="absolute top-[-20%] left-[-20%] w-[60%] h-[60%] bg-amber-600/5 rounded-full blur-[100px]" />
+        
+        <div className={`relative z-10 max-w-md w-full transition-all duration-1000 ${isActive ? 'opacity-100' : 'opacity-0'}`}>
+            <div className="mb-12">
+                <Award className="w-10 h-10 text-amber-500 mx-auto mb-6 opacity-80" />
+                <div className="h-px w-16 bg-gradient-to-r from-transparent via-amber-500/50 to-transparent mx-auto" />
+            </div>
+
+            <div className="space-y-8 font-serif text-base leading-relaxed">
+                <div className={`transition-all duration-1000 delay-300 ${isActive ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
+                    <span className="text-amber-500 font-bold text-xl">2025，</span>
+                    <span className="text-slate-300">您用 </span>
+                    <span className="text-white font-bold text-xl border-b border-amber-500/30 mx-1">{reportData.stats.hours}</span>
+                    <span className="text-slate-300">小时的坚守，</span>
+                </div>
+
+                <div className={`transition-all duration-1000 delay-700 ${isActive ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
+                    <span className="text-slate-300">守护了 </span>
+                    <span className="text-white font-bold text-xl border-b border-amber-500/30 mx-1">{reportData.stats.families}</span>
+                    <span className="text-slate-300">个生命的安康。</span>
+                </div>
+
+                <div className={`transition-all duration-1000 delay-1000 ${isActive ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
+                    <span className="text-slate-300">您写下的 </span>
+                    <span className="text-white font-bold text-xl border-b border-amber-500/30 mx-1">{reportData.stats.words}</span>
+                    <span className="text-slate-300">万字病历，</span>
+                    <br className="mb-2" />
+                    <span className="text-slate-300">是 </span>
+                    <span className="text-white font-bold text-xl border-b border-amber-500/30 mx-1">{reportData.stats.families}</span>
+                    <span className="text-slate-300">个家庭不能忘却的记忆。</span>
+                </div>
+
+                <div className={`py-6 transition-all duration-1000 delay-[1500ms] ${isActive ? 'opacity-100' : 'opacity-0'}`}>
+                    <p className="text-slate-500 text-sm italic font-sans tracking-wider uppercase">"Thank you for your dedication"</p>
+                </div>
+
+                <div className={`space-y-3 transition-all duration-1000 delay-[2000ms] ${isActive ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
+                    <p className="text-slate-300">愿新的一年，</p>
+                    <p className="text-slate-300">您救治的每一位患者都奔向健康，</p>
+                    <p className="text-slate-300">您付出的每一刻时光都收获回响。</p>
+                </div>
+            </div>
+
+            <div className={`mt-16 transition-all duration-1000 delay-[2500ms] ${isActive ? 'opacity-100 scale-100' : 'opacity-0 scale-90'}`}>
+                <div className="inline-block px-8 py-3 border border-amber-500/30 rounded bg-[#0f172a]/50 backdrop-blur-sm">
+                    <span className="text-amber-500 font-bold tracking-[0.2em]">医路漫漫，感恩有您！</span>
+                </div>
+            </div>
+        </div>
+    </div>
+);
+
+// 8. 关键词：身份象征
 const KeywordPage = ({ isActive }) => (
     <div className="h-full w-full bg-[#0f172a] flex flex-col items-center justify-center p-8 text-center relative overflow-hidden">
         <div className={`relative z-10 transition-all duration-1000 ${isActive ? 'opacity-100 scale-100' : 'opacity-0 scale-90'}`}>
@@ -376,10 +437,25 @@ const KeywordPage = ({ isActive }) => (
                         <div className="text-slate-500 text-[10px] uppercase">Doctor</div>
                         <div className="text-white font-serif">{reportData.name}</div>
                     </div>
-                    <button className="bg-amber-600 hover:bg-amber-500 text-white px-4 py-2 rounded text-xs font-bold flex items-center gap-2 transition-colors">
-                        <Share2 className="w-3 h-3" />
-                        生成名片
-                    </button>
+                    <div className="flex gap-2">
+                        <button 
+                            onClick={() => {
+                                navigator.clipboard.writeText(window.location.href);
+                                alert("链接已复制");
+                            }}
+                            className="bg-slate-800 hover:bg-slate-700 text-white px-3 py-2 rounded text-xs font-bold flex items-center gap-1 transition-colors"
+                        >
+                            <Share2 className="w-3 h-3" />
+                            复制链接
+                        </button>
+                        <button 
+                            onClick={() => alert("海报生成功能开发中...")}
+                            className="bg-amber-600 hover:bg-amber-500 text-white px-3 py-2 rounded text-xs font-bold flex items-center gap-1 transition-colors"
+                        >
+                            <Share2 className="w-3 h-3" />
+                            保存名片
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -393,7 +469,7 @@ const KeywordPage = ({ isActive }) => (
 export default function ReportV2() {
     const [currentPage, setCurrentPage] = useState(0);
     const isScrolling = useRef(false);
-    const pages = [CoverPage, StatsPage, AbilityPage, ChartPage, TimePage, AwardPage, KeywordPage];
+    const pages = [CoverPage, StatsPage, AbilityPage, ChartPage, TimePage, AwardPage, MessagePage, KeywordPage];
 
     const handleScroll = (direction) => {
         if (isScrolling.current) return;

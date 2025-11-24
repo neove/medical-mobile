@@ -11,16 +11,19 @@ const reportData = {
     role: "心血管外科",
     year: 2024,
     stats: {
-        patients: 1850,
-        surgeries: 320,
-        hours: 2400,
-        cupsOfCoffee: 680 
+        patients: "2,856",
+        surgeries: "328",
+        hours: "2,460",
+        nightShifts: "42",
+        consultations: "156",
+        words: "168", // 万字
+        families: "3,200"
     },
-    monthlyData: [45, 52, 48, 61, 55, 67, 72, 65, 58, 63, 59, 48],
+    monthlyData: [45, 52, 58, 61, 55, 67, 72, 65, 58, 63, 75, 68],
     notes: [
-        { date: "3月12日", content: "今天的手术非常成功，患者家属哭了，我也差点哭了。", type: "happy" },
-        { date: "8月5日", content: "连续工作了16个小时，咖啡是我的救命稻草。", type: "tired" },
-        { date: "11月20日", content: "收到了小朋友送的画，画里的我像个超人。", type: "touched" }
+        { date: "11月14日", content: "凌晨 03:42，终于完成了这台急性A型主动脉夹层抢救，看到心跳恢复的那一刻，值了。", type: "tired" },
+        { date: "7月20日", content: "今天破纪录了，单日完成了 4 台瓣膜置换术，感觉手已经不是自己的了，但心里很充实。", type: "happy" },
+        { date: "9月20日", content: "收到了康复患者的手写感谢信，字迹很工整，说是“让我看到了明天的太阳”，有点想哭。", type: "touched" }
     ]
 };
 
@@ -92,9 +95,9 @@ const CoverPage = ({ isActive }) => (
 // 2. 涂鸦数据页
 const StatsPage = ({ isActive }) => {
     const stats = [
-        { label: "接诊患者", val: reportData.stats.patients, icon: Smile, color: "text-blue-600" },
-        { label: "手术台数", val: reportData.stats.surgeries, icon: ActivityIcon, color: "text-red-600" },
-        { label: "咖啡消耗", val: reportData.stats.cupsOfCoffee, icon: CoffeeIcon, color: "text-amber-700" }
+        { label: "接诊患者", val: reportData.stats.patients, icon: Smile, color: "text-blue-600", unit: "人次" },
+        { label: "手术台数", val: reportData.stats.surgeries, icon: ActivityIcon, color: "text-red-600", unit: "台" },
+        { label: "夜班值守", val: reportData.stats.nightShifts, icon: CoffeeIcon, color: "text-amber-700", unit: "次" }
     ];
 
     return (
@@ -113,7 +116,10 @@ const StatsPage = ({ isActive }) => {
                                 <item.icon className={`w-6 h-6 ${item.color}`} />
                             </div>
                             <div>
-                                <div className="text-4xl font-bold text-stone-800 font-handwriting">{item.val}</div>
+                                <div className="flex items-baseline gap-1">
+                                    <span className="text-4xl font-bold text-stone-800 font-handwriting">{item.val}</span>
+                                    <span className="text-xl text-stone-500 font-handwriting">{item.unit}</span>
+                                </div>
                                 <div className="text-stone-500 font-bold text-sm tracking-wider font-handwriting">{item.label}</div>
                             </div>
                             {/* 模拟马克笔圈注 */}
@@ -128,7 +134,7 @@ const StatsPage = ({ isActive }) => {
 
                 <div className="mt-12 p-4 bg-yellow-100 border border-yellow-300 rounded shadow-sm rotate-1">
                     <p className="font-handwriting text-stone-700 text-xl leading-relaxed">
-                        "这一年真的辛苦了！特别是那 {reportData.stats.cupsOfCoffee} 杯咖啡..." ☕️
+                        "这一年真的辛苦了！特别是那 {reportData.stats.nightShifts} 个不眠之夜..." ☕️
                     </p>
                 </div>
             </PaperContainer>
@@ -223,7 +229,42 @@ const NotePage = ({ isActive }) => (
     </div>
 );
 
-// 5. 拍立得分享页
+// 6. 寄语：致敬医者
+const MessagePage = ({ isActive }) => (
+    <div className="h-full w-full flex flex-col items-center justify-center p-6 bg-[#f0f0f0]">
+        <PaperContainer className="p-8 w-full max-w-sm min-h-[500px] rounded-sm" rotate={1}>
+             <div className="absolute -top-4 right-12 w-32 h-8 bg-red-200/50 rotate-3 transform skew-x-12" /> {/* 装饰胶带 */}
+             
+             <div className="font-handwriting space-y-8 text-xl text-stone-800 leading-relaxed pt-4">
+                 <div className={`transition-all duration-1000 ${isActive ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
+                     <p>2025，您用 <span className="text-3xl font-bold text-red-600 underline decoration-wavy decoration-stone-300">{reportData.stats.hours}</span> 小时的坚守，</p>
+                     <p>守护了 <span className="text-3xl font-bold text-red-600 underline decoration-wavy decoration-stone-300">{reportData.stats.families}</span> 个生命的安康。</p>
+                 </div>
+
+                 <div className={`transition-all duration-1000 delay-500 ${isActive ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
+                     <p>您写下的 <span className="text-3xl font-bold text-red-600 underline decoration-wavy decoration-stone-300">{reportData.stats.words}</span> 万字病历，</p>
+                     <p>是 <span className="text-3xl font-bold text-red-600 underline decoration-wavy decoration-stone-300">{reportData.stats.families}</span> 个家庭不能忘却的记忆。</p>
+                 </div>
+
+                 <div className={`transition-all duration-1000 delay-1000 ${isActive ? 'opacity-100' : 'opacity-0'}`}>
+                     <p className="text-stone-500 text-lg">"感谢您的每一分付出"</p>
+                     <div className="w-full h-px bg-stone-300 my-2" />
+                     <p>愿新的一年，</p>
+                     <p>您救治的每一位患者都奔向健康，</p>
+                     <p>您付出的每一刻时光都收获回响。</p>
+                 </div>
+
+                 <div className={`pt-8 text-right transition-all duration-1000 delay-[1500ms] ${isActive ? 'opacity-100 scale-100' : 'opacity-0 scale-90'}`}>
+                     <span className="inline-block px-4 py-2 border-2 border-stone-800 rounded-full text-red-600 font-bold -rotate-3">
+                        医路漫漫，感恩有您！
+                     </span>
+                 </div>
+             </div>
+        </PaperContainer>
+    </div>
+);
+
+// 7. 拍立得分享页
 const SharePage = ({ isActive }) => (
     <div className="h-full w-full flex flex-col items-center justify-center p-6 bg-stone-200">
         <div className={`relative w-full max-w-xs transition-all duration-1000 ${isActive ? 'scale-100 rotate-0' : 'scale-90 rotate-6'}`}>
@@ -277,7 +318,7 @@ const CoffeeIcon = (props) => (
 export default function ReportV10() {
     const [currentPage, setCurrentPage] = useState(0);
     const isScrolling = useRef(false);
-    const pages = [CoverPage, StatsPage, ChartPage, NotePage, SharePage];
+    const pages = [CoverPage, StatsPage, ChartPage, NotePage, MessagePage, SharePage];
 
     const handleScroll = (direction) => {
         if (isScrolling.current) return;
